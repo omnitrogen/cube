@@ -1,4 +1,4 @@
-#importer ici plein de truc pour faire croire que notre programme est super compliqué
+#importer ici plein de trucs pour faire croire que notre programme est super compliqué
 
 
 ########################         fonction principale        #######################
@@ -17,21 +17,21 @@ def faire_cube():
     print("les fonctions s'enchainent bien")
     return 
 
-########################           Avec Raspberry             ########################
+########################           Avec Raspberry Pi          ########################
 
 def analyse_cube():
     #camera + reconnaissance d'image
-    cube = 0
+    cube = {}
     return cube
 
 def tourner_cube(sequence):
-    #on entre la qequence totale a faire et la machine physique fait les mouvvements
+    #on entre la sequence totale à faire et la machine physique fait les mouvvements
     return
 
 #####################   Toutes les étapes de résolution     #########################
 
 def croix_blanche(cube):
-    sequence = []
+    sequence = []   
     return cube,sequence
 
 def deux_etages(cube,sequence):
@@ -50,11 +50,18 @@ def nouvelle_position(cube,mouv):
 ################################################################################
 
 def optimisation(sequence): #annule dans la sequence finale les coups en double
-    i=0
+    i=1
     while i<len(sequence)-1:
         if sequence[i]==-sequence[i+1]: #stocker les differents mouvements sous la forme de nombres tels que mouv inverse = -mouv
             sequence.pop(i)
             sequence.pop(i)
-            i=-1
-        i+=1
+            if i>0:
+                i-=i
+        elif sequence[i-1]==sequence[i]==sequence[i+1] and i>0: #si 3 mêmes doivent être joués successivement, remplacer par -coup
+            sequence[i-1]*=-1
+            sequence.pop(i)
+            sequence.pop(i)
+            i-=1
+        else:
+            i+=1
     return sequence
