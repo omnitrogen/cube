@@ -31,7 +31,7 @@ def tourner_cube(sequence):
 #####################   Toutes les étapes de résolution     #########################
 
 def croix_blanche(cube):
-    sequence = []   
+    sequence = []
     return cube,sequence
 
 def deux_etages(cube,sequence):
