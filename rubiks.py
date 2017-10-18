@@ -5,21 +5,39 @@ from cv2 import *
 im = cv2.imread('yellowrsz.png')
 im = cv2.bilateralFilter(im,9,75,75)
 im = cv2.fastNlMeansDenoisingColored(im,None,10,10,7,21)
-
+cv2.imshow("Show",im)
 
 # il va falloir choisir un "color space" qui convient pour mieux traiter les couleurs
+
+# XYZ image
+xyz_img = cv2.cvtColor(im, cv2.COLOR_BGR2XYZ)   
+cv2.imshow("XYZ", xyz_img)
+cv2.imwrite("xyz.jpg", im)
 
 # HSV image
 hsv_img = cv2.cvtColor(im, cv2.COLOR_BGR2HSV)   
 cv2.imshow("HSV", hsv_img)
+cv2.imwrite("hsv.jpg", im)
+
+# HLS image
+hls_img = cv2.cvtColor(im, cv2.COLOR_BGR2HLS)   
+cv2.imshow("HLS", hls_img)
+cv2.imwrite("hls.jpg", im)
 
 # LAB image
 lab_img = cv2.cvtColor(im, cv2.COLOR_BGR2LAB)
 cv2.imshow("LAB", lab_img)
+cv2.imwrite("lab.jpg", im)
+
+# LUV image
+luv_img = cv2.cvtColor(im, cv2.COLOR_BGR2LUV)
+cv2.imshow("LUV", luv_img)
+cv2.imwrite("luv.jpg", im)
 
 # YCrCb image
 ycrcb_img = cv2.cvtColor(im, cv2.COLOR_BGR2YCrCb)
 cv2.imshow("YCrCb", ycrcb_img)
+cv2.imwrite("ycrcb.jpg", im)
 
 
 COLOR_MIN = np.array([20, 100, 100],np.uint8)       # HSV color code lower and upper bounds
