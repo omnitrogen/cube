@@ -12,32 +12,32 @@ cv2.imshow("Show",im)
 # XYZ image
 xyz_img = cv2.cvtColor(im, cv2.COLOR_BGR2XYZ)   
 cv2.imshow("XYZ", xyz_img)
-cv2.imwrite("xyz.jpg", im)
+cv2.imwrite("xyz.jpg", xyz_img)
 
 # HSV image
 hsv_img = cv2.cvtColor(im, cv2.COLOR_BGR2HSV)   
 cv2.imshow("HSV", hsv_img)
-cv2.imwrite("hsv.jpg", im)
+cv2.imwrite("hsv.jpg", hsv_img)
 
 # HLS image
 hls_img = cv2.cvtColor(im, cv2.COLOR_BGR2HLS)   
 cv2.imshow("HLS", hls_img)
-cv2.imwrite("hls.jpg", im)
+cv2.imwrite("hls.jpg", hls_img)
 
 # LAB image
 lab_img = cv2.cvtColor(im, cv2.COLOR_BGR2LAB)
 cv2.imshow("LAB", lab_img)
-cv2.imwrite("lab.jpg", im)
+cv2.imwrite("lab.jpg", lab_img)
 
 # LUV image
 luv_img = cv2.cvtColor(im, cv2.COLOR_BGR2LUV)
 cv2.imshow("LUV", luv_img)
-cv2.imwrite("luv.jpg", im)
+cv2.imwrite("luv.jpg", luv_img)
 
 # YCrCb image
 ycrcb_img = cv2.cvtColor(im, cv2.COLOR_BGR2YCrCb)
 cv2.imshow("YCrCb", ycrcb_img)
-cv2.imwrite("ycrcb.jpg", im)
+cv2.imwrite("ycrcb.jpg", ycrcb_img)
 
 
 COLOR_MIN = np.array([20, 100, 100],np.uint8)       # HSV color code lower and upper bounds
