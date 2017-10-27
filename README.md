@@ -8,19 +8,22 @@ TODO:
 
 * detect colors on each face of the cube (with a lib like OpenCV)
 
-    _choose a color space_
+    _the program take a pic as an input:_
 
-    ![alt tag](https://github.com/omnitrogen/cube/blob/opencv-color-detection/hls.jpg)
+    ![alt tag](https://github.com/omnitrogen/cube/blob/opencv-color-detection/cube4.png)
+    
+    _then it crop the image at size of the cube_
 
-    ![alt tag](https://github.com/omnitrogen/cube/blob/opencv-color-detection/hsv.jpg)
+    ![alt tag](https://github.com/omnitrogen/cube/blob/opencv-color-detection/crop.png)
 
-    ![alt tag](https://github.com/omnitrogen/cube/blob/opencv-color-detection/lab.jpg)
+    _then it reduces the number of colors = color quantization (using K-means clustering)_
 
-    ![alt tag](https://github.com/omnitrogen/cube/blob/opencv-color-detection/luv.jpg)
+    ![alt tag](https://github.com/omnitrogen/cube/blob/opencv-color-detection/crop_quantization.png)
 
-    ![alt tag](https://github.com/omnitrogen/cube/blob/opencv-color-detection/ycrcb.jpg)
-
-* move stepper motors with GPIO pins on a raspberry pi and/or Arduino chip
+    _TODO: apply color tresholding to guess the color of each cube_
+    
+    
+* move stepper motors (NEMA 17HS4401) with GPIO pins on a raspberry pi and/or Arduino chip (controlled by a DRV8825 Stepper Motor Pilote Module) 
 
 * create a GUI to control all these things (Tkinter) :rainbow:
 
