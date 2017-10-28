@@ -10,8 +10,6 @@ gray = cv2.GaussianBlur(img, (3, 3), 0)
 gray = cv2.cvtColor(gray,cv2.COLOR_BGR2GRAY)
 gray = cv2.bilateralFilter(gray,9,75,75)
 
-# il va surement falloir appliquer un treshold ici car il va y avoir les tiges reliées au moteur qui viendront perturber la fonction "goodFeaturesToTrack"...
-
 corners = cv2.goodFeaturesToTrack(gray,25,0.01,10)
 corners = np.int0(corners)
 
@@ -100,7 +98,6 @@ print("h :", colors[ColorNames.findNearestWebColorName(tuple(list(quant[h])[::-1
 print("i :", colors[ColorNames.findNearestWebColorName(tuple(list(quant[i])[::-1]))])
 
 cv2.imshow("color quantization", np.hstack([quant]))
-cv2.imwrite("quantization.png", quant)
 cv2.waitKey(0)
 
 
