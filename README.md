@@ -4,23 +4,23 @@
 
 TIPE project: build a machine that can solve a Rubik's cube.
 
-TODO:
+Steps: 
 
 * detect colors on each face of the cube (with a lib like OpenCV)
 
-    _the program take a pic as an input:_
+    * _the program take a pic as an input:_
 
     ![alt tag](https://github.com/omnitrogen/cube/blob/opencv-color-detection/cube4.png)
     
-    _then it crop the image at size of the cube_
+    * _then it crop the image at size of the cube_
 
     ![alt tag](https://github.com/omnitrogen/cube/blob/opencv-color-detection/crop.png)
 
-    _then it reduces the number of colors = color quantization (using K-means clustering)_
+    * _then it reduces the number of colors to 6 colors = color quantization (using K-means clustering)_
 
     ![alt tag](https://github.com/omnitrogen/cube/blob/opencv-color-detection/crop_quantization.png)
 
-    _TODO: apply color tresholding to guess the color of each cube_
+    * _then it compares every color to its nearest color from the 6 rubiks cube color and output a list of each square color_
     
     
 * move stepper motors (NEMA 17HS4401) with GPIO pins on a raspberry pi and/or Arduino chip (controlled by a DRV8825 Stepper Motor Pilote Module) 
