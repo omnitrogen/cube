@@ -3,6 +3,7 @@ import cv2
 from sklearn.cluster import MiniBatchKMeans
 from nearest_color import ColorNames
 
+# to resize a pic with opencv : res = cv2.resize(img,None,fx=0.1, fy=0.1, interpolation = cv2.INTER_AREA)
 
 img = cv2.imread('../../Pictures/cube/cube2.png')
 img = cv2.fastNlMeansDenoisingColored(img,None,10,10,7,21)
