@@ -6,9 +6,13 @@ TIPE project: build a machine that can solve a Rubik's cube.
 
 Steps: 
 
-* detect colors on each face of the cube (with a lib like OpenCV)
+* take a pic and detect colors on each face of the cube (with a lib like OpenCV)
 
-    * _the program take a pic as an input:_
+	* _the Raspberry Pi is connected to the GoPro over wifi_
+
+	* _the GoPro take a pic and save it_
+
+    * _the ColorFinder class take a pic as an input:_
 
     ![alt tag](https://github.com/omnitrogen/cube/blob/opencv-color-detection/cube4.png)
     

@@ -15,12 +15,13 @@ class Camera(GoProCamera.GoPro):
 		""" take pic, download it and return the path of the pic """
 		GoProCamera.GoPro.take_photo(self)
 		GoProCamera.GoPro.downloadLastMedia(self)
-		self.path = os.getcwd() + "/" + str(self.getMediaInfo("file"))
+		self.path = os.getcwd() + "/" + "118GOPRO-" + str(self.getMediaInfo("file"))
 
 
 
 
-test = Camera()
-test.take_photo()
-print(test.path)
+if __name__ == "__main__":
+	test = Camera()
+	test.take_photo()
+	print(test.path)
 
