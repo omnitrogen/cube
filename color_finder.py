@@ -124,10 +124,10 @@ class ColorFinder:
 
 
 def main():
-	camera = Camera()
-	camera.take_photo()
-	print(camera.path) # path of the pic taken by the gopro
-	finder = ColorFinder(camera.path)
+	#camera = Camera()
+	#camera.take_photo()
+	#print(camera.path) # path of the pic taken by the gopro
+	finder = ColorFinder("/Users/felixdefrance/Desktop/rubik\'s-pic/naturel.JPG")
 	finder.modify()
 	finder.analyse()
  

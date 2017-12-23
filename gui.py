@@ -2,7 +2,6 @@ from tkinter import *
 import tkinter as tk
 from PIL import Image, ImageTk
 
-
 class RubiksSolverGui:
     def __init__(self, master):
         self.master = master
@@ -33,7 +32,7 @@ class RubiksSolverGui:
     def take_photo(self):
         #take_pic_with_gopro
         pass
-
+        
 if __name__ == "__main__":
     root = tk.Tk()
     my_gui = RubiksSolverGui(root)
