@@ -5,12 +5,12 @@ import os
 
 class Camera(GoProCamera.GoPro):
 	""" GoPro class """
-	
-	def __init__ (self):
+
+	def __init__(self):
 		""" Class initialiser """
 		GoProCamera.GoPro.__init__(self, constants.gpcontrol)
 		self.path = str()
-		
+
 	def take_photo(self):
 		""" take pic, download it and return the path of the pic """
 		GoProCamera.GoPro.take_photo(self)

@@ -7,24 +7,21 @@ from camera import Camera
 
 class ColorFinder:
 	""" ColorFinder class """
-	
-	def __init__ (self, path):
+
+	def __init__(self, path):
 		""" Class initialiser """
 		self.image = cv2.imread(path)
-		
-		
+
 	def modify(self):
 		""" delete the distortion (gopro cam have natural distortion) and then resize the pic """
 		MTX = np.array([[1.64127926e+03, 0.00000000e+00, 1.50380436e+03], [0.00000000e+00, 1.66536863e+03, 1.29941304e+03], [0.00000000e+00, 0.00000000e+00, 1.00000000e+00]])
 		DIST = np.array([[-0.32245647, 0.19393362, -0.00692064, 0.01852231, -0.11396549]])
 
 		self.modify = cv2.undistort(self.image, MTX, DIST, None, None)
-		
 		self.modify = cv2.resize(self.modify,None,fx=0.2, fy=0.2, interpolation = cv2.INTER_AREA)
 		cv2.imshow("modify", self.modify)
 		cv2.waitKey(0)
-		
-		
+
 	def analyse(self):
 		""" analyse the cube and return 9 colors (one for each cube on a face) """
 		img = cv2.fastNlMeansDenoisingColored(self.modify,None,10,10,7,21)
@@ -39,8 +36,8 @@ class ColorFinder:
 		ordonnees = [elt[0][1] for elt in corners.tolist()]
 
 		for i in corners:
-			x,y = i.ravel()
-			cv2.circle(img,(x,y),3,255,-1)
+			x, y = i.ravel()
+			cv2.circle(img, (x, y), 3, 255, -1)
 
 		cv2.imshow("img", img)
 		cv2.waitKey(0)
@@ -48,7 +45,7 @@ class ColorFinder:
 		print(min(ordonnees), max(ordonnees), min(abscisses), max(abscisses))
 		crop = img[min(ordonnees):max(ordonnees),min(abscisses):max(abscisses)].copy()
 
-		cv2.imshow("crop",crop)
+		cv2.imshow("crop", crop)
 		cv2.waitKey(0)
 
 		# grab width and height of the cropped image
@@ -68,7 +65,7 @@ class ColorFinder:
 
 		# apply k-means using the specified number of clusters and
 		# then create the quantized image based on the predictions
-		clt = MiniBatchKMeans(n_clusters = 6)
+		clt = MiniBatchKMeans(n_clusters=6)
 		labels = clt.fit_predict(crop)
 		quant = clt.cluster_centers_.astype("uint8")[labels]
 
@@ -130,10 +127,6 @@ def main():
 	finder = ColorFinder("/Users/felixdefrance/Desktop/rubik\'s-pic/naturel.JPG")
 	finder.modify()
 	finder.analyse()
- 
+
 if __name__ == "__main__":
 	main()
-	
-
-
-
