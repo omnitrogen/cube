@@ -1,5 +1,5 @@
 class ColorNames:
-    # Src: http://www.w3schools.com/html/html_colornames.asp  
+    # Src: http://www.w3schools.com/html/html_colornames.asp
     WebColorMap = {}
     # WebColorMap["AliceBlue"] = "#F0F8FF"
     # WebColorMap["AntiqueWhite"] = "#FAEBD7"
@@ -149,12 +149,11 @@ class ColorNames:
     # WebColorMap["Yellow"] = "#FFFF00"
     # WebColorMap["YellowGreen"] = "#9ACD32"
 
-          
     def findNearestColorName(a, Map):
         mindiff = None
         for d in Map:
             r, g, b = ColorNames.rgbFromStr(Map[d])
-            diff = abs(a[0] -r)*256 + abs(a[1]-g)* 256 + abs(a[2]- b)* 256
+            diff = abs(a[0] - r) * 256 + abs(a[1] - g) * 256 + abs(a[2] - b) * 256
             if mindiff is None or diff < mindiff:
                 mindiff = diff
                 mincolorname = d
@@ -162,22 +161,23 @@ class ColorNames:
 
     def rgbFromStr(s):
         # s starts with a #.
-        (r, g, b) = (int(s[1:3],16), int(s[3:5], 16),int(s[5:7], 16))
+        (r, g, b) = (int(s[1:3], 16), int(s[3:5], 16), int(s[5:7], 16))
         return r, g, b
 
     def findNearestWebColorName(a):
-        return ColorNames.findNearestColorName(a,ColorNames.WebColorMap)
-    
-    def findNearestImageMagickColorName(a):  
-        return ColorNames.findNearestColorName(a, ColorNames.ImageMagickColorMap)  
-  
-if __name__ == "__main__":             
+        return ColorNames.findNearestColorName(a, ColorNames.WebColorMap)
+
+    def findNearestImageMagickColorName(a):
+        return ColorNames.findNearestColorName(a, ColorNames.ImageMagickColorMap)
+
+
+if __name__ == "__main__":
     yellow = (242, 169, 0)
-    orange = (255,81,0)
+    orange = (255, 81, 0)
     red = (148, 0, 0)
-    blue = (31,25,115)
-    white = (178,178,175)
-    green = (0,136,51)
+    blue = (31, 25, 115)
+    white = (178, 178, 175)
+    green = (0, 136, 51)
     print(ColorNames.findNearestWebColorName(yellow))
     print(ColorNames.findNearestWebColorName(orange))
     print(ColorNames.findNearestWebColorName(red))

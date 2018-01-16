@@ -4,6 +4,7 @@ from tkinter import ttk
 from PIL import Image, ImageTk
 import time
 
+
 class RubiksSolverGui:
     def __init__(self, master):
         self.master = master
@@ -14,7 +15,7 @@ class RubiksSolverGui:
         self.image = Image.open("cubeR.gif")
         self.photo = ImageTk.PhotoImage(self.image)
         self.label = tk.Label(self.frame, image=self.photo)
-        self.label.image = self.photo # keep a reference!
+        self.label.image = self.photo   # keep a reference!
         self.label.grid(row=0, column=0)
 
         self.label = tk.Label(self.frame, text="Welcome to the Rubik's Cube Solver!")

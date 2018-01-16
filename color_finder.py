@@ -18,18 +18,19 @@ class ColorFinder:
 		DIST = np.array([[-0.32245647, 0.19393362, -0.00692064, 0.01852231, -0.11396549]])
 
 		self.modify = cv2.undistort(self.image, MTX, DIST, None, None)
-		self.modify = cv2.resize(self.modify,None,fx=0.2, fy=0.2, interpolation = cv2.INTER_AREA)
+
+		self.modify = cv2.resize(self.modify, None, fx=0.2, fy=0.2, interpolation=cv2.INTER_AREA)
 		cv2.imshow("modify", self.modify)
 		cv2.waitKey(0)
 
 	def analyse(self):
 		""" analyse the cube and return 9 colors (one for each cube on a face) """
-		img = cv2.fastNlMeansDenoisingColored(self.modify,None,10,10,7,21)
+		img = cv2.fastNlMeansDenoisingColored(self.modify, None, 10, 10, 7, 21)
 		gray = cv2.GaussianBlur(img, (3, 3), 0)
-		gray = cv2.cvtColor(gray,cv2.COLOR_BGR2GRAY)
-		gray = cv2.bilateralFilter(gray,9,75,75)
+		gray = cv2.cvtColor(gray, cv2.COLOR_BGR2GRAY)
+		gray = cv2.bilateralFilter(gray, 9, 75, 75)
 
-		corners = cv2.goodFeaturesToTrack(gray,25,0.01,10)
+		corners = cv2.goodFeaturesToTrack(gray, 25, 0.01, 10)
 		corners = np.int0(corners)
 
 		abscisses = [elt[0][0] for elt in corners.tolist()]
@@ -43,7 +44,7 @@ class ColorFinder:
 		cv2.waitKey(0)
 
 		print(min(ordonnees), max(ordonnees), min(abscisses), max(abscisses))
-		crop = img[min(ordonnees):max(ordonnees),min(abscisses):max(abscisses)].copy()
+		crop = img[min(ordonnees):max(ordonnees), min(abscisses):max(abscisses)].copy()
 
 		cv2.imshow("crop", crop)
 		cv2.waitKey(0)
@@ -90,7 +91,7 @@ class ColorFinder:
 		cv2.rectangle(quant,(5*(height//12), 9*(width//12)),(7*(height//12), 11*(width//12)),(0,255,0),1)
 		cv2.rectangle(quant,(9*(height//12), 9*(width//12)),(11*(height//12), 11*(width//12)),(0,255,0),1)
 
-		# (y, x) 
+		# (y, x)
 
 		a = ((height//6), (width//6))
 		b = ((height//6), (3*(width//6)))
@@ -119,14 +120,10 @@ class ColorFinder:
 		cv2.waitKey(0)
 
 
-
-def main():
+if __name__ == "__main__":
 	#camera = Camera()
 	#camera.take_photo()
 	#print(camera.path) # path of the pic taken by the gopro
-	finder = ColorFinder("/Users/felixdefrance/Desktop/rubik\'s-pic/naturel.JPG")
+	finder = ColorFinder("/Users/felixdefrance/.envs/cv/cube/cube6.png")
 	finder.modify()
 	finder.analyse()
-
-if __name__ == "__main__":
-	main()

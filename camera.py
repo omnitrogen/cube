@@ -18,10 +18,7 @@ class Camera(GoProCamera.GoPro):
 		self.path = os.getcwd() + "/" + "118GOPRO-" + str(self.getMediaInfo("file"))
 
 
-
-
 if __name__ == "__main__":
 	test = Camera()
 	test.take_photo()
 	print(test.path)
-
