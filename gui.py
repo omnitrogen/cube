@@ -53,6 +53,7 @@ class RubiksSolverGui:
         print("taking photos")
         pass
 
+
 if __name__ == "__main__":
     root = tk.Tk()
     my_gui = RubiksSolverGui(root)

@@ -4,7 +4,6 @@ from sklearn.cluster import MiniBatchKMeans
 from nearest_color import ColorNames
 from camera import Camera
 
-
 class ColorFinder:
 	""" ColorFinder class """
 
@@ -17,15 +16,15 @@ class ColorFinder:
 		MTX = np.array([[1.64127926e+03, 0.00000000e+00, 1.50380436e+03], [0.00000000e+00, 1.66536863e+03, 1.29941304e+03], [0.00000000e+00, 0.00000000e+00, 1.00000000e+00]])
 		DIST = np.array([[-0.32245647, 0.19393362, -0.00692064, 0.01852231, -0.11396549]])
 
-		self.modify = cv2.undistort(self.image, MTX, DIST, None, None)
+		self.modified = cv2.undistort(self.image, MTX, DIST, None, None)
 
-		self.modify = cv2.resize(self.modify, None, fx=0.2, fy=0.2, interpolation=cv2.INTER_AREA)
-		cv2.imshow("modify", self.modify)
+		self.modified = cv2.resize(self.modified, None, fx=0.2, fy=0.2, interpolation=cv2.INTER_AREA)
+		cv2.imshow("modify", self.modified)
 		cv2.waitKey(0)
 
 	def analyse(self):
 		""" analyse the cube and return 9 colors (one for each cube on a face) """
-		img = cv2.fastNlMeansDenoisingColored(self.modify, None, 10, 10, 7, 21)
+		img = cv2.fastNlMeansDenoisingColored(self.modified, None, 10, 10, 7, 21)
 		gray = cv2.GaussianBlur(img, (3, 3), 0)
 		gray = cv2.cvtColor(gray, cv2.COLOR_BGR2GRAY)
 		gray = cv2.bilateralFilter(gray, 9, 75, 75)
