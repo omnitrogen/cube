@@ -183,7 +183,7 @@ class Cube:
                 self._move_list[-1] = (f, ntot, layer)
         else:
             self._move_list.append((f, n, layer))
-        
+
         v = self.facesdict[f]
         r = Quaternion.from_v_theta(v, n * np.pi / 2)
         M = r.as_rotation_matrix()
@@ -398,7 +398,7 @@ class InteractiveCube(plt.Axes):
                     self.rotate_face(event.key.upper(), direction, layer=d)
             else:
                 self.rotate_face(event.key.upper(), direction)
-                
+
         self._draw_cube()
 
     def _key_release(self, event):

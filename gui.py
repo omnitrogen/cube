@@ -4,22 +4,24 @@ from tkinter import ttk
 from PIL import Image, ImageTk
 import time
 
+class ResizingCanvas(tk.Canvas):
+    def __init__(self,parent,**kwargs):
+        tk.Canvas.__init__(self,parent,**kwargs)
+        self.bind("<Configure>", self.on_resize)
+        self.height = self.winfo_reqheight()
+        self.width = self.winfo_reqwidth()
 
-class MyButton(Button):
-    def __init__(self, master):
-        Button.__init__(self, master)
-        self.ishide = False
-        self['text'] = 'OK'
- 
-    def hide(self):
-        if not self.ishide:
-            self.pack_forget()
-            self.ishide = True
-            bt['text'] = "display OK"
-        else:
-            self.pack()
-            self.ishide = False
-            bt['text'] = "hide OK"
+    def on_resize(self,event):
+        # determine the ratio of old width/height to new width/height
+        wscale = float(event.width)/self.width
+        hscale = float(event.height)/self.height
+        self.width = event.width
+        self.height = event.height
+        # resize the canvas
+        self.config(width=self.width, height=self.height)
+        # rescale all the objects tagged with the "all" tag
+        self.scale("all",0,0,wscale,hscale)
+
 
 class RubiksSolverGui:
     def __init__(self, master):
@@ -48,6 +50,29 @@ class RubiksSolverGui:
 
         self.canvas = tk.Canvas(self.frame, width = 400, height = 200, borderwidth=0, background='green', highlightthickness=0)
         self.canvas.grid(row=4, pady=(10, 10))
+
+        self.frame2 = tk.Frame(self.frame)
+        self.frame2.grid(row=5)
+
+        self.frame3 = tk.Frame(self.frame2)
+        self.frame3.pack(fill=BOTH, expand=YES)
+
+        self.mycanvas = ResizingCanvas(self.frame3,width=850, height=400, bg="red", highlightthickness=0)
+        self.mycanvas.pack(fill=BOTH, expand=YES)
+
+        self.rec0 = self.mycanvas.create_rectangle(50, 50, 75, 75, fill="blue")
+        self.rec1 = self.mycanvas.create_rectangle(50, 75, 75, 100, fill="blue")
+        self.rec2 = self.mycanvas.create_rectangle(50, 100, 75, 125, fill="blue")
+
+        self.rec3 = self.mycanvas.create_rectangle(75, 50, 100, 75, fill="blue")
+        self.rec4 = self.mycanvas.create_rectangle(75, 75, 100, 100, fill="blue")
+        self.rec5 = self.mycanvas.create_rectangle(75, 100, 100, 125, fill="blue")
+
+        self.rec6 = self.mycanvas.create_rectangle(100, 50, 125, 75, fill="blue")
+        self.rec7 = self.mycanvas.create_rectangle(100, 75, 125, 100, fill="blue")
+        self.rec8 = self.mycanvas.create_rectangle(100, 100, 125, 125, fill="blue")
+
+        self.mycanvas.addtag_all("all")
 
         #self.close_button = tk.Button(self.frame, text="Close", command=master.quit)
         #self.close_button.grid(row=5, pady=(10, 20))
