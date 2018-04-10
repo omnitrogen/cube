@@ -1,6 +1,27 @@
 from time import sleep
 import RPi.GPIO as GPIO
 
+# http://pyserial.readthedocs.io/en/latest/shortintro.html
+
+import serial
+ser = serial.Serial('/dev/tty0COM')
+ser.write(b"test")
+ser.close()
+
+'''
+raspi connectée à l'arduino via USB -> envoit des données via la lib pyserial
+
+l'arduino recevra un message du type: xy, x'y', ...
+
+avec:
+    * x l'id du moteur (entre 0 et 4)
+    * y le mouvement à exécuter (entre -4 et 4 -> -4 = 360deg counter clockwise, 2 = 180deg clockwise)
+'''
+
+
+
+
+
 DIR1 = 5
 STEP1 = 6
 DIR2 = 7
@@ -19,7 +40,7 @@ SPR = 200
 
 class MotorRotation(object):
 	""" control the rotation of one motor """
-	def __init__(self, DIR1, STEP1, ROT):
+	def __init__(self):
 		self.DIR1 = DIR1
 		self.STEP1 = STEP1
 		self.ROT = ROT
@@ -29,8 +50,8 @@ class MotorRotation(object):
 		GPIO.output(self.DIR1, ROT)
 		
 	def rotate(self, angle, signe):
-		for i in range(angle
-		GPIO.output(self.STEP1, GPIO.HIGH)
+		for i in range(angle):
+            GPIO.output(self.STEP1, GPIO.HIGH)
 		
 
 
