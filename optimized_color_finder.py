@@ -85,5 +85,5 @@ class ColorFinder(object):
 
 if __name__ == "__main__":
     finder = ColorFinder("")
-    finder.modify()
+    #finder.modify()
     print(finder.analyse())

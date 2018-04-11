@@ -4,12 +4,15 @@ from tkinter import ttk
 from PIL import Image, ImageTk
 import time
 
+import optimized_color_finder
+
 class ResizingCanvas(tk.Canvas):
     def __init__(self,parent,**kwargs):
         tk.Canvas.__init__(self,parent,**kwargs)
         self.bind("<Configure>", self.on_resize)
         self.height = self.winfo_reqheight()
         self.width = self.winfo_reqwidth()
+        self.r1 = []
 
     def on_resize(self,event):
         # determine the ratio of old width/height to new width/height
@@ -48,29 +51,27 @@ class RubiksSolverGui:
         self.solve_button = tk.Button(self.frame, text="Solve the cube", command=self.solve_cube)
         self.solve_button.grid_forget()
 
-        self.canvas = tk.Canvas(self.frame, width = 400, height = 200, borderwidth=0, background='green', highlightthickness=0)
-        self.canvas.grid(row=4, pady=(10, 10))
-
         self.frame2 = tk.Frame(self.frame)
-        self.frame2.grid(row=5)
+        self.frame2.grid(row=4)
 
         self.frame3 = tk.Frame(self.frame2)
         self.frame3.pack(fill=BOTH, expand=YES)
 
-        self.mycanvas = ResizingCanvas(self.frame3,width=850, height=400, bg="grey", highlightthickness=0)
-        self.mycanvas.pack(fill=BOTH, expand=YES)
+        self.mycanvas = ResizingCanvas(self.frame3,width=301, height=226, bg="white", highlightthickness=0)
+        self.mycanvas.pack(fill=BOTH, expand=YES, padx=(20, 20), pady=(20, 20))
 
-        self.rec01 = self.mycanvas.create_rectangle(0, 75, 25, 100, fill="lime green")
-        self.rec02 = self.mycanvas.create_rectangle(0, 100, 25, 125, fill="lime green")
-        self.rec03 = self.mycanvas.create_rectangle(0, 125, 25, 150, fill="lime green")
 
-        self.rec04 = self.mycanvas.create_rectangle(25, 75, 50, 100, fill="lime green")
-        self.rec05 = self.mycanvas.create_rectangle(25, 100, 50, 125, fill="lime green")
-        self.rec06 = self.mycanvas.create_rectangle(25, 125, 50, 150, fill="lime green")
+        self.r1 = [self.mycanvas.create_rectangle(0, 75, 25, 100, fill="lime green"),
+            self.mycanvas.create_rectangle(0, 100, 25, 125, fill="lime green"),
+            self.mycanvas.create_rectangle(0, 125, 25, 150, fill="lime green"),
 
-        self.rec07 = self.mycanvas.create_rectangle(50, 75, 75, 100, fill="lime green")
-        self.rec08 = self.mycanvas.create_rectangle(50, 100, 75, 125, fill="lime green")
-        self.rec09 = self.mycanvas.create_rectangle(50, 125, 75, 150, fill="lime green")
+            self.mycanvas.create_rectangle(25, 75, 50, 100, fill="lime green"),
+            self.mycanvas.create_rectangle(25, 100, 50, 125, fill="lime green"),
+            self.mycanvas.create_rectangle(25, 125, 50, 150, fill="lime green"),
+
+            self.mycanvas.create_rectangle(50, 75, 75, 100, fill="lime green"),
+            self.mycanvas.create_rectangle(50, 100, 75, 125, fill="lime green"),
+            self.mycanvas.create_rectangle(50, 125, 75, 150, fill="lime green")]
 
 
         self.rec11 = self.mycanvas.create_rectangle(75, 0, 100, 25, fill="white")
@@ -112,7 +113,6 @@ class RubiksSolverGui:
         self.rec39 = self.mycanvas.create_rectangle(125, 200, 150, 225, fill="yellow")
 
 
-
         self.rec41 = self.mycanvas.create_rectangle(150, 75, 175, 100, fill="blue")
         self.rec42 = self.mycanvas.create_rectangle(150, 100, 175, 125, fill="blue")
         self.rec43 = self.mycanvas.create_rectangle(150, 125, 175, 150, fill="blue")
@@ -125,7 +125,6 @@ class RubiksSolverGui:
         self.rec48 = self.mycanvas.create_rectangle(200, 100, 225, 125, fill="blue")
         self.rec49 = self.mycanvas.create_rectangle(200, 125, 225, 150, fill="blue")
 
-        
 
         self.rec51 = self.mycanvas.create_rectangle(225, 75, 250, 100, fill="orange")
         self.rec52 = self.mycanvas.create_rectangle(225, 100, 250, 125, fill="orange")
@@ -137,13 +136,17 @@ class RubiksSolverGui:
 
         self.rec57 = self.mycanvas.create_rectangle(275, 75, 300, 100, fill="orange")
         self.rec58 = self.mycanvas.create_rectangle(275, 100, 300, 125, fill="orange")
-        self.rec59 = self.mycanvas.create_rectangle(275, 125, 300, 150, fill="orange")        
+        self.rec59 = self.mycanvas.create_rectangle(275, 125, 300, 150, fill="orange")
 
 
         self.mycanvas.addtag_all("all")
 
         #self.close_button = tk.Button(self.frame, text="Close", command=master.quit)
         #self.close_button.grid(row=5, pady=(10, 20))
+
+        self.answer = tk.StringVar()
+        self.answerLabel = tk.Label(self.frame, textvariable=self.answer)
+        self.answerLabel.grid(row=5)
 
         self.frame.pack(padx=20, pady=20)
 
@@ -153,7 +156,7 @@ class RubiksSolverGui:
 
     def take_photo(self):
         #take_pic_with_gopro
-        MAX = 30
+        MAX = 5
         progress_var = DoubleVar()
         self.progress_bar_label = Label(self.frame, text="scanning...")
         self.progress_bar_label.grid(row=6)
@@ -166,6 +169,14 @@ class RubiksSolverGui:
             k += 0.1
             time.sleep(0.01)
             self.frame.update()
+
+        finder = optimized_color_finder.ColorFinder("/Users/felixdefrance/.envs/cv/cube/test3.png")
+        result = finder.analyse()
+        for elt, i in zip(self.r1, range(len(self.r1))):
+            self.mycanvas.itemconfig(elt, fill=str(result[i]))
+
+        #self.answer.set(str(finder.analyse()))
+
         if self.solve_button.winfo_ismapped():
             self.solve_button.grid_forget()
         else:
