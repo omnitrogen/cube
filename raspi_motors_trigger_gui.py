@@ -2,14 +2,14 @@ from tkinter import *
 import tkinter as tk
 from tkinter import ttk
 from time import sleep
-import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
 
 DIR = 20   # Direction GPIO Pin
 STEP = 21  # Step GPIO Pin
 CW = 1     # Clockwise Rotation
 CCW = 0    # Counterclockwise Rotation
 SPR = 48   # Steps per Revolution (360 / 7.5)
-
+'''
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(DIR, GPIO.OUT)
 GPIO.setup(STEP, GPIO.OUT)
@@ -27,7 +27,7 @@ GPIO.output(MODE, RESOLUTION['1/32'])
 
 step_count = SPR * 32
 delay = .0208 / 32
-
+'''
 
 class MotorTrigger:
     def __init__(self, master):

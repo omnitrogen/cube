@@ -90,6 +90,21 @@ def main():
 
     mycanvas.create_rectangle(50, 25, 150, 75, fill="blue")
 
+    mycanvas.create_rectangle(0, 75, 25, 100, fill="forest green")
+     
+    mycanvas.create_rectangle(0, 100, 25, 125, fill="green")
+
+    mycanvas.create_rectangle(0, 125, 25, 150, fill="green")
+
+    mycanvas.create_rectangle(25, 75, 50, 100, fill="green")
+
+    mycanvas.create_rectangle(25, 100, 50, 125, fill="green")
+    mycanvas.create_rectangle(25, 125, 50, 150, fill="green")
+    mycanvas.create_rectangle(50, 75, 75, 100, fill="green")
+
+    mycanvas.create_rectangle(50, 100, 75, 125, fill="green")
+    mycanvas.create_rectangle(50, 125, 75, 150, fill="green")
+
     mycanvas.addtag_all("all")
     root.mainloop()
 

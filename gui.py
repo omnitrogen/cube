@@ -57,20 +57,88 @@ class RubiksSolverGui:
         self.frame3 = tk.Frame(self.frame2)
         self.frame3.pack(fill=BOTH, expand=YES)
 
-        self.mycanvas = ResizingCanvas(self.frame3,width=850, height=400, bg="red", highlightthickness=0)
+        self.mycanvas = ResizingCanvas(self.frame3,width=850, height=400, bg="grey", highlightthickness=0)
         self.mycanvas.pack(fill=BOTH, expand=YES)
 
-        self.rec0 = self.mycanvas.create_rectangle(50, 50, 75, 75, fill="blue")
-        self.rec1 = self.mycanvas.create_rectangle(50, 75, 75, 100, fill="blue")
-        self.rec2 = self.mycanvas.create_rectangle(50, 100, 75, 125, fill="blue")
+        self.rec01 = self.mycanvas.create_rectangle(0, 75, 25, 100, fill="lime green")
+        self.rec02 = self.mycanvas.create_rectangle(0, 100, 25, 125, fill="lime green")
+        self.rec03 = self.mycanvas.create_rectangle(0, 125, 25, 150, fill="lime green")
 
-        self.rec3 = self.mycanvas.create_rectangle(75, 50, 100, 75, fill="blue")
-        self.rec4 = self.mycanvas.create_rectangle(75, 75, 100, 100, fill="blue")
-        self.rec5 = self.mycanvas.create_rectangle(75, 100, 100, 125, fill="blue")
+        self.rec04 = self.mycanvas.create_rectangle(25, 75, 50, 100, fill="lime green")
+        self.rec05 = self.mycanvas.create_rectangle(25, 100, 50, 125, fill="lime green")
+        self.rec06 = self.mycanvas.create_rectangle(25, 125, 50, 150, fill="lime green")
 
-        self.rec6 = self.mycanvas.create_rectangle(100, 50, 125, 75, fill="blue")
-        self.rec7 = self.mycanvas.create_rectangle(100, 75, 125, 100, fill="blue")
-        self.rec8 = self.mycanvas.create_rectangle(100, 100, 125, 125, fill="blue")
+        self.rec07 = self.mycanvas.create_rectangle(50, 75, 75, 100, fill="lime green")
+        self.rec08 = self.mycanvas.create_rectangle(50, 100, 75, 125, fill="lime green")
+        self.rec09 = self.mycanvas.create_rectangle(50, 125, 75, 150, fill="lime green")
+
+
+        self.rec11 = self.mycanvas.create_rectangle(75, 0, 100, 25, fill="white")
+        self.rec12 = self.mycanvas.create_rectangle(75, 25, 100, 50, fill="white")
+        self.rec13 = self.mycanvas.create_rectangle(75, 50, 100, 75, fill="white")
+
+        self.rec14 = self.mycanvas.create_rectangle(100, 0, 125, 25, fill="white")
+        self.rec15 = self.mycanvas.create_rectangle(100, 25, 125, 50, fill="white")
+        self.rec16 = self.mycanvas.create_rectangle(100, 50, 125, 75, fill="white")
+
+        self.rec17 = self.mycanvas.create_rectangle(125, 0, 150, 25, fill="white")
+        self.rec18 = self.mycanvas.create_rectangle(125, 25, 150, 50, fill="white")
+        self.rec19 = self.mycanvas.create_rectangle(125, 50, 150, 75, fill="white")
+
+
+        self.rec21 = self.mycanvas.create_rectangle(75, 75, 100, 100, fill="red")
+        self.rec22 = self.mycanvas.create_rectangle(75, 100, 100, 125, fill="red")
+        self.rec23 = self.mycanvas.create_rectangle(75, 125, 100, 150, fill="red")
+
+        self.rec24 = self.mycanvas.create_rectangle(100, 75, 125, 100, fill="red")
+        self.rec25 = self.mycanvas.create_rectangle(100, 100, 125, 125, fill="red")
+        self.rec26 = self.mycanvas.create_rectangle(100, 125, 125, 150, fill="red")
+
+        self.rec27 = self.mycanvas.create_rectangle(125, 75, 150, 100, fill="red")
+        self.rec28 = self.mycanvas.create_rectangle(125, 100, 150, 125, fill="red")
+        self.rec29 = self.mycanvas.create_rectangle(125, 125, 150, 150, fill="red")
+
+
+        self.rec31 = self.mycanvas.create_rectangle(75, 150, 100, 175, fill="yellow")
+        self.rec32 = self.mycanvas.create_rectangle(75, 175, 100, 200, fill="yellow")
+        self.rec33 = self.mycanvas.create_rectangle(75, 200, 100, 225, fill="yellow")
+
+        self.rec34 = self.mycanvas.create_rectangle(100, 150, 125, 175, fill="yellow")
+        self.rec35 = self.mycanvas.create_rectangle(100, 175, 125, 200, fill="yellow")
+        self.rec36 = self.mycanvas.create_rectangle(100, 200, 125, 225, fill="yellow")
+
+        self.rec37 = self.mycanvas.create_rectangle(125, 150, 150, 175, fill="yellow")
+        self.rec38 = self.mycanvas.create_rectangle(125, 175, 150, 200, fill="yellow")
+        self.rec39 = self.mycanvas.create_rectangle(125, 200, 150, 225, fill="yellow")
+
+
+
+        self.rec41 = self.mycanvas.create_rectangle(150, 75, 175, 100, fill="blue")
+        self.rec42 = self.mycanvas.create_rectangle(150, 100, 175, 125, fill="blue")
+        self.rec43 = self.mycanvas.create_rectangle(150, 125, 175, 150, fill="blue")
+
+        self.rec44 = self.mycanvas.create_rectangle(175, 75, 200, 100, fill="blue")
+        self.rec45 = self.mycanvas.create_rectangle(175, 100, 200, 125, fill="blue")
+        self.rec46 = self.mycanvas.create_rectangle(175, 125, 200, 150, fill="blue")
+
+        self.rec47 = self.mycanvas.create_rectangle(200, 75, 225, 100, fill="blue")
+        self.rec48 = self.mycanvas.create_rectangle(200, 100, 225, 125, fill="blue")
+        self.rec49 = self.mycanvas.create_rectangle(200, 125, 225, 150, fill="blue")
+
+        
+
+        self.rec51 = self.mycanvas.create_rectangle(225, 75, 250, 100, fill="orange")
+        self.rec52 = self.mycanvas.create_rectangle(225, 100, 250, 125, fill="orange")
+        self.rec53 = self.mycanvas.create_rectangle(225, 125, 250, 150, fill="orange")
+
+        self.rec54 = self.mycanvas.create_rectangle(250, 75, 275, 100, fill="orange")
+        self.rec55 = self.mycanvas.create_rectangle(250, 100, 275, 125, fill="orange")
+        self.rec56 = self.mycanvas.create_rectangle(250, 125, 275, 150, fill="orange")
+
+        self.rec57 = self.mycanvas.create_rectangle(275, 75, 300, 100, fill="orange")
+        self.rec58 = self.mycanvas.create_rectangle(275, 100, 300, 125, fill="orange")
+        self.rec59 = self.mycanvas.create_rectangle(275, 125, 300, 150, fill="orange")        
+
 
         self.mycanvas.addtag_all("all")
 
@@ -88,7 +156,7 @@ class RubiksSolverGui:
         MAX = 30
         progress_var = DoubleVar()
         self.progress_bar_label = Label(self.frame, text="scanning...")
-        self.progress_bar_label.grid(row=5)
+        self.progress_bar_label.grid(row=6)
         self.progressbar = ttk.Progressbar(root, variable=progress_var, maximum=MAX)
         self.progressbar.pack(fill=X, expand=1)
         k = 0
