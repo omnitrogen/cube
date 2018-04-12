@@ -170,8 +170,9 @@ class RubiksSolverGui:
             time.sleep(0.01)
             self.frame.update()
 
-        finder = optimized_color_finder.ColorFinder("/Users/felixdefrance/.envs/cv/cube/test3.png")
-        result = finder.analyse()
+        #finder = optimized_color_finder.ColorFinder("/Users/felixdefrance/.envs/cv/cube/test3.png")
+        #result = finder.analyse()
+        result = ["orange", "green", "orange", "green","orange", "green","orange", "green", "orange"]
         for elt, i in zip(self.r1, range(len(self.r1))):
             self.mycanvas.itemconfig(elt, fill=str(result[i]))
 
