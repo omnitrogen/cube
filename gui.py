@@ -4,28 +4,8 @@ from tkinter import ttk
 from PIL import Image, ImageTk
 import time
 
-#from optimized_color_finder import ColorFinder
-#from camera import Camera
-
-class ResizingCanvas(tk.Canvas):
-    def __init__(self,parent,**kwargs):
-        tk.Canvas.__init__(self,parent,**kwargs)
-        self.bind("<Configure>", self.on_resize)
-        self.height = self.winfo_reqheight()
-        self.width = self.winfo_reqwidth()
-        self.r1 = []
-
-    def on_resize(self,event):
-        # determine the ratio of old width/height to new width/height
-        wscale = float(event.width)/self.width
-        hscale = float(event.height)/self.height
-        self.width = event.width
-        self.height = event.height
-        # resize the canvas
-        self.config(width=self.width, height=self.height)
-        # rescale all the objects tagged with the "all" tag
-        self.scale("all",0,0,wscale,hscale)
-
+from optimized_color_finder import ColorFinder
+from camera import Camera
 
 class RubiksSolverGui:
     def __init__(self, master):
@@ -58,7 +38,7 @@ class RubiksSolverGui:
         self.frame3 = tk.Frame(self.frame2)
         self.frame3.pack(fill=BOTH, expand=YES)
 
-        self.mycanvas = ResizingCanvas(self.frame3,width=301, height=226, bg="white", highlightthickness=0)
+        self.mycanvas = Canvas(self.frame3,width=301, height=226, bg="white", highlightthickness=0)
         self.mycanvas.pack(fill=BOTH, expand=YES, padx=(20, 20), pady=(20, 20))
 
 
@@ -167,11 +147,6 @@ class RubiksSolverGui:
         k = 0
         while k <= MAX:
         ### some work to be done
-
-            result = ["orange", "green", "orange", "green","orange", "green","orange", "green", "orange"]
-            for elt, i in zip(self.r, range(len(self.r))):
-                for elt2, i2 in zip(elt, range(len(elt))):
-                    self.mycanvas.itemconfig(elt2, fill=str(result[i2]))
 
             progress_var.set(k)
             k += 1
