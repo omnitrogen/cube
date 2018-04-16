@@ -60,7 +60,6 @@ class ColorFinder(object):
                     b += 1
             return [math.floor(sumB/b), math.floor(sumG/b), math.floor(sumR/b)][::-1]
 
-
         self.image = cv2.GaussianBlur(self.image, (3, 3), 0)
         self.image = increase_brightness(self.image, value=math.floor(100*math.exp((-approximate_lum(self.image)**2)/(2*60**2))))
 
@@ -80,10 +79,10 @@ class ColorFinder(object):
         for i in result:
             i.append(colors[ColorNames.findNearestWebColorName(get_dominant_color(self.image, tuple(i)))])
 
-        return [i[2] for i in result]
+        return [i[2] for i in result if i[:2] != [1,1]] # ne renvoit pas le cube central
 
 
 if __name__ == "__main__":
-    finder = ColorFinder("")
+    finder = ColorFinder("/home/pi/Desktop/test1.png")
     #finder.modify()
     print(finder.analyse())
