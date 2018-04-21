@@ -1,20 +1,12 @@
 import serial
+import time
 
-with serial.Serial('/dev/ttyACM0') as ser:
-	'''
-	while 1:
-	   serial_data1 = ser.readline()
-	   print(serial_data1)
-	   serial_data2 = ser.readline()
-	   print(serial_data2)
-	   if serial_data1 != b'' or  serial_data2 != b'':
-		   text = str(input(">>> "))
-		   ser.write(str.encode(text))
-		   ser.flush()
-	'''
-	print(ser.readline())
-	ser.write(b'4')
-	print(ser.readline())
-	ser.write(b'5')
-	print(ser.readline())
-	print(ser.readline())
+with serial.Serial('/dev/cu.usbmodem1421', timeout=1) as ser:
+    i = 0
+    time.sleep(1)
+    while i < 10:
+        t = ser.readline()
+        print(t.decode())
+        ser.write(str.encode(input("-> ")))
+        time.sleep(1)
+        i += 1
