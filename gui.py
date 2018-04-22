@@ -4,8 +4,6 @@ from tkinter import ttk
 from PIL import Image, ImageTk
 import time
 
-from optimized_color_finder import ColorFinder
-from camera import Camera
 
 class RubiksSolverGui:
     def __init__(self, master):

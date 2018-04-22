@@ -17,9 +17,9 @@ class ColorFinder(object):
         """ delete the distortion (gopro cam have natural distortion) and then resize the pic """
         MTX = np.array([[1.64127926e+03, 0.00000000e+00, 1.50380436e+03], [0.00000000e+00, 1.66536863e+03, 1.29941304e+03], [0.00000000e+00, 0.00000000e+00, 1.00000000e+00]])
         DIST = np.array([[-0.32245647, 0.19393362, -0.00692064, 0.01852231, -0.11396549]])
-        self.modified = cv2.undistort(self.image, MTX, DIST, None, None)
-        self.modified = cv2.resize(self.modified, None, fx=0.2, fy=0.2, interpolation=cv2.INTER_AREA)
-        #cv2.imshow("modify", self.modified)
+        self.image = cv2.undistort(self.image, MTX, DIST, None, None)
+        self.image = cv2.resize(self.modified, None, fx=0.2, fy=0.2, interpolation=cv2.INTER_AREA)
+        #cv2.imshow("modify", self.image)
         #cv2.waitKey(0)
 
     def analyse(self):
