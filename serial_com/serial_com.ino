@@ -12,21 +12,16 @@ void loop(){
     inData = byte(Serial.read());
     // Serial.write(inData);
 
-    /*
     if(inData == 'a'){
-      Serial.print("c'est un a");
+      Serial.print("OK");
     }
     
     else if(inData == '1'){
-      Serial.print("c'est un 1");
+      Serial.print("OK");
     }
     
     else{
-      Serial.print("OVNI");
+      Serial.print("NOPE");
     }
-    */
-    
-    delay(4000);
-    Serial.print(inData);
   }
 }

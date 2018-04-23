@@ -4,6 +4,8 @@ from tkinter import ttk
 from PIL import Image, ImageTk
 import time
 
+from quatre_etapes import *
+
 
 class RubiksSolverGui:
     def __init__(self, master):

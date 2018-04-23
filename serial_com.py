@@ -3,27 +3,32 @@ import time
 
 
 '''
-with serial.Serial('/dev/ttyACM0', timeout=1) as ser:
+with serial.Serial('/dev/ttyACM0', timeout=0.1) as ser:
     i = 0
-    time.sleep(1)
+    time.sleep(2)
+    t = ser.readline()
+    print(t.decode())
     while i < 2:
-        t = ser.readline()
-        print("t:", type(t), type(t.decode()))
-        print(t.decode())
         ser.write(str.encode(input("-> ")))
         time.sleep(1)
+        t = ser.readline()
+        print(t.decode())
         i += 1
 '''
 
-with serial.Serial('/dev/ttyACM0', timeout=1) as ser:
-			time.sleep(1)
-			if ser.readline().decode() == "GO":
-				print("yeah")
-				ser.write(str.encode("O"))
-				t = ser.readline().decode()
-				while t != "O":
-					t = ser.readline().decode()
-					time.sleep(0.001)
-				print("ok")
-			print("noooope")
-			
+#with serial.Serial('/dev/ttyACM0', timeout=.1) as ser:
+
+ser = serial.Serial('/dev/ttyACM0', timeout = .1)
+hook = ""
+while hook != "GO":
+	time.sleep(0.001)
+	hook = ser.readline().decode()
+print("felix est il intelligent")
+ser.write(str.encode("O"))
+t = ""
+while t == "":
+	time.sleep(0.001)
+	t = ser.readline().decode()
+print(t)
+print("ok")
+ser.close()

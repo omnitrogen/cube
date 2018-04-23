@@ -2,6 +2,12 @@ import random as rd
 import time
 from pprint import pprint
 
+import serial
+
+from optimized_color_finder import ColorFinder
+from camera import Camera
+
+
 class Face:
     def __init__(self, axe, valeur):
         self.a = axe
@@ -121,6 +127,7 @@ class Cube:
             del self.pos[i]
 
 #######################################         croix blanche       #################################
+
     def croix_blanche(self):
         for i in ["bleu","orange","vert","rouge"]:
             if self.pos["arete blanc",i][1][0] != "blanc": #autre sur blanc ou jaune
@@ -569,40 +576,87 @@ class Cube:
 ##########################################      Utiliser les moteurs        ##########################################
 
     def moteur(self):
-		sequenceArduino = ""
+		
+        sequenceArduino = ""
+                
         for coup in self.sequence:
-            #utiliser moteur adequat pour faire coup
-            #faire tous les élement de la sequence
-            sequenceArduino += {(0, 1, -1): "a", (0, 1, -2): "b", (0, 1, 1): "c", (1, 1, -1): "d", (1, 1, -2): "e", (1, 1, 1): "f", (1, -1, -1): "g", (1, -1, -2): "h", (1, -1, 1): "i", (2, 1, -1): "j", (2, 1, -2): "k", (2, 1, 1): "l", (2, -1, -1): "m", (2, -1, -2): "n", (2, -1, 1): "o"}[tuple(coup)]
-            
+                        #utiliser moteur adequat pour faire coup
+                        #faire tous les élement de la sequence
+                        sequenceArduino += {(0, 1, -1): "a", (0, 1, -2): "b", (0, 1, 1): "c", (1, 1, -1): "d", (1, 1, -2): "e", (1, 1, 1): "f", (1, -1, -1): "g", (1, -1, -2): "h", (1, -1, 1): "i", (2, 1, -1): "j", (2, 1, -2): "k", (2, 1, 1): "l", (2, -1, -1): "m", (2, -1, -2): "n", (2, -1, 1): "o"}[tuple(coup)]
+                        
+        # le z sert de confirmation à la fin de chaque sequence pour etre sur que l'arduino a tout execute
+        sequenceArduino += "z"
+        
+        '''
         # envoyer à l'arduino la chaine de caractere
-        # ser.write(sequenceArduino)
+        ser = serial.Serial('/dev/ttyACM0', timeout=.1)
+        hook = ""
+        while hook != "GO":
+                time.sleep(0.001)
+                hook = ser.readline().decode()
+        print("yeah")
+        
+        for elt in sequenceArduino:
+                ser.write(str.encode(elt))
+                t = ""
+                while t != "OK":
+                        time.sleep(0.001)
+                        t = ser.readline().decode()
+                        if t == "NOPE":
+                                print("error")
+                                break
+                print(t)
+        ser.close()
+        '''
+        
         self.sequence = []
         pass
 
 ############################################################################################################
-def optimisation(seq):
-    """Methode annulant dans la sequence finale les coups superflus"""
-    i=1
-    while i<len(seq):
-        if (seq[i][0], seq[i][1]) == (seq[i-1][0], seq[i-1][1]):
-            if (seq[i][2] + seq[i-1][2])%4 == 0:
-                seq.pop(i-1)
-                seq.pop(i-1)
-                if i != 1:
-                    i -= 1
+
+    def optimisation(self):
+        """Methode annulant dans la sequence finale les coups superflus"""
+        i=1
+        while i<len(self.sequence):
+            if (self.sequence[i][0], self.sequence[i][1]) == (self.sequence[i-1][0], self.sequence[i-1][1]):
+                if (self.sequence[i][2] + self.sequence[i-1][2])%4 == 0:
+                    self.sequence.pop(i-1)
+                    self.sequence.pop(i-1)
+                    if i != 1:
+                        i -= 1
+                else:
+                    self.sequence[i-1][2] = (self.sequence[i][2] + self.sequence[i-1][2] + 2)%4 -2
+                    self.sequence.pop(i)
             else:
-                seq[i-1][2] = (seq[i][2] + seq[i-1][2] + 2)%4 -2
-                seq.pop(i)
-        else:
-            i += 1
+                i += 1
 
 #########################################################################################################
+    
+    def resolution(self):
+        self.croix_blanche()
+        self.deux_etages()
+        self.face_jaune()
+        self.orienter_jaune()
+
+        self.optimisation()
+
+        self.moteur()
+
+
 def photographier():
     #prendre une photo avec la gopro puis l'analyser
+    '''
+    #take a photo
+    photo = camera.Camera()
+    photo.take_photo()
     
-    # 
+    #analyse the pic and return 
+    photoAnalysed = ColorFinder(photo.path)
+    photoAnalysed.modify()
     
+    #return liste de couleurs (sans celle du milieu)
+    return photoAnalysed.analyse()
+    '''
     return 8 * ["blanc"] #provisoire #return liste de couleur
 
 
@@ -631,7 +685,7 @@ def test(nombre_test = 1, nombre_melange = 0):
         cube.orienter_jaune()
         
         coup+=len(cube.sequence)
-        optimisation(cube.sequence)
+        cube.optimisation()
         coup_opti+=len(cube.sequence)
 
         cube.moteur()
@@ -647,14 +701,27 @@ def test(nombre_test = 1, nombre_melange = 0):
     print(fin-debut)
 
 ############################################################################################################
+
+
 mil=["bleu","orange","vert","rouge"]
 couleur={"jaune":Face(0,1), "blanc":Face(0,-1), "bleu":Face(1,1), "vert":Face(1,-1), "rouge":Face(2,1), "orange":Face(2,-1)}
-cube = Cube()
 fait = Cube()
 
-test(100,20)
+if __name__ == "__main__":
+	cube = Cube()
+	test(100,20)
 
-# melange(10)
-# print(cube.sequence)
-# test()
-# print(cube.sequence)
+	'''
+	scan the cube on the gui:
+	cube = Cube("6/5")
+	test()
+
+	'''
+
+	# melange(10)
+	# print(cube.sequence)
+	# test()
+	# print(cube.sequence)
+
+cube = Cube("Jacques et felix sont geniaux et ils meritent 20/20")
+cube.resolution()
