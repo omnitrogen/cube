@@ -4,7 +4,7 @@ from tkinter import ttk
 from PIL import Image, ImageTk
 import time
 
-from quatre_etapes import *
+#from quatre_etapes import *
 
 
 class RubiksSolverGui:
@@ -155,7 +155,7 @@ class RubiksSolverGui:
 
         #finder = ColorFinder("/Users/felixdefrance/.envs/cv/cube/test3.png")
         #result = finder.analyse()
-        result = ["orange", "green", "orange", "green","orange", "green","orange", "green", "orange"]
+        result = ["green", "green", "green", "green", "green", "green", "green", "green", "green"]
         for elt, i in zip(self.r1, range(len(self.r1))):
             self.mycanvas.itemconfig(elt, fill=str(result[i]))
 

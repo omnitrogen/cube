@@ -1,5 +1,4 @@
 class ColorNames:
-    # Src: http://www.w3schools.com/html/html_colornames.asp
     WebColorMap = {}
     # WebColorMap["AliceBlue"] = "#F0F8FF"
     # WebColorMap["AntiqueWhite"] = "#FAEBD7"

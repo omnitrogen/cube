@@ -85,7 +85,7 @@ class Cube:
                     self.pos[i][1][a-1], self.pos[i][1][a-2] = self.pos[i][1][a-2], self.pos[i][1][a-1]
                     self.pos[i][0][a-1], self.pos[i][0][a-2] = -s * b * self.pos[i][0][a-2], s * b * self.pos[i][0][a-1]
 
-        self.sequence.append([a,b,sens])
+        self.sequence.append((a,b,sens))
 
 ##################################       Analyse et reconstruction      #############################
 
@@ -578,11 +578,10 @@ class Cube:
     def moteur(self):
 		
         sequenceArduino = ""
-                
         for coup in self.sequence:
-                        #utiliser moteur adequat pour faire coup
-                        #faire tous les élement de la sequence
-                        sequenceArduino += {(0, 1, -1): "a", (0, 1, -2): "b", (0, 1, 1): "c", (1, 1, -1): "d", (1, 1, -2): "e", (1, 1, 1): "f", (1, -1, -1): "g", (1, -1, -2): "h", (1, -1, 1): "i", (2, 1, -1): "j", (2, 1, -2): "k", (2, 1, 1): "l", (2, -1, -1): "m", (2, -1, -2): "n", (2, -1, 1): "o"}[tuple(coup)]
+            #utiliser moteur adequat pour faire coup
+            #faire tous les élement de la sequence
+            sequenceArduino += {(0, 1, -1): "a", (0, 1, -2): "b", (0, 1, 1): "c", (1, 1, -1): "d", (1, 1, -2): "e", (1, 1, 1): "f", (1, -1, -1): "g", (1, -1, -2): "h", (1, -1, 1): "i", (2, 1, -1): "j", (2, 1, -2): "k", (2, 1, 1): "l", (2, -1, -1): "m", (2, -1, -2): "n", (2, -1, 1): "o"}[coup]
                         
         # le z sert de confirmation à la fin de chaque sequence pour etre sur que l'arduino a tout execute
         sequenceArduino += "z"
@@ -625,7 +624,7 @@ class Cube:
                     if i != 1:
                         i -= 1
                 else:
-                    self.sequence[i-1][2] = (self.sequence[i][2] + self.sequence[i-1][2] + 2)%4 -2
+                    self.sequence[i-1] = self.sequence[i-1][0], self.sequence[i-1][1], (self.sequence[i][2] + self.sequence[i-1][2] + 2)%4 -2
                     self.sequence.pop(i)
             else:
                 i += 1
