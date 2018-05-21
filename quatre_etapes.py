@@ -2,8 +2,6 @@ import random as rd
 import time
 from pprint import pprint
 
-import serial
-
 from optimized_color_finder import ColorFinder
 from camera import Camera
 

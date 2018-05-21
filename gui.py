@@ -4,6 +4,8 @@ from tkinter import ttk
 from PIL import Image, ImageTk
 import time
 
+import serial
+
 #from quatre_etapes import *
 
 
@@ -173,6 +175,8 @@ class RubiksSolverGui:
 
 
 if __name__ == "__main__":
+    ser = serial.Serial('/dev/cu.usbmodem1421', timeout=.1)
     root = tk.Tk()
     my_gui = RubiksSolverGui(root)
     root.mainloop()
+    ser.close()
