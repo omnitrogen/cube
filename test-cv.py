@@ -3,7 +3,7 @@ import math
 import cv2
 import numpy as np
 import imutils
-
+import time
 from goprocam import GoProCamera
 from goprocam import constants
 
@@ -113,8 +113,35 @@ print(rotated.shape[:2])
 rotated2 = rotated[193:287, 214:309]
 #cv2.imshow("rotated", rotated2)
 #cv2.waitKey(0)
-#cv2.imwrite("/Users/felixdefrance/Downloads/sisisi.png", rotated2)
+cv2.imwrite("/Users/felixdefrance/Downloads/sisisi.png", rotated2)
 
 finder = ColorFinder("/Users/felixdefrance/Downloads/sisisi.png")
 #finder.modify()
 print(finder.analyse())
+
+for loop in range(11):
+    print(loop)
+    time.sleep(1)
+
+
+test = Camera()
+test.take_photo()
+image = cv2.imread(test.path)
+resized = cv2.resize(image, None, fx=0.2, fy=0.2, interpolation=cv2.INTER_AREA)
+#cv2.imshow("image", resized)
+#cv2.waitKey(0)
+
+rotated = imutils.rotate_bound(resized, -5)
+#cv2.imshow("rotated", rotated)
+#cv2.waitKey(0)
+
+print(rotated.shape[:2])
+rotated2 = rotated[193:287, 214:309]
+#cv2.imshow("rotated", rotated2)
+#cv2.waitKey(0)
+cv2.imwrite("/Users/felixdefrance/Downloads/sisisi.png", rotated2)
+
+finder = ColorFinder("/Users/felixdefrance/Downloads/sisisi.png")
+#finder.modify()
+print(finder.analyse())
+
