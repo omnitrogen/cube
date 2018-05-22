@@ -1,5 +1,5 @@
 String inData;
-const int spr = 200;
+const int spr = 200 * 32;
 
 void setup() {
     Serial.begin(9600);
@@ -8,8 +8,11 @@ void setup() {
         pinMode(i, OUTPUT);
         digitalWrite(i,LOW);
     }
+
+    // maybe add enable PINS ?
+
     delay(1000);
-    Serial.print("init");
+    // Serial.print("init");
 }
 
 void loop() {
@@ -87,9 +90,8 @@ void loop() {
                 break;
 
             }
-            Serial.write(inData[i]);
+            // Serial.write(inData[i]);
         }
-
     }
 }
 
@@ -99,7 +101,8 @@ void turn(int sens, int pinPas, int pinSens, float rot) {
 
     for(int k = 0; k < spr * rot; k++){
         digitalWrite(pinPas, HIGH);
+        delayMicroseconds(50); // ?
         digitalWrite(pinPas, LOW);
-        delayMicroseconds(1000);
+        delayMicroseconds(50);
     }
 }
