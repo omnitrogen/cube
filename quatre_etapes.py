@@ -2,9 +2,7 @@ import random as rd
 import time
 from pprint import pprint
 
-from optimized_color_finder import ColorFinder
-from camera import Camera
-
+from camera_analyse import Camera, analyse_pic
 
 class Face:
     def __init__(self, axe, valeur):
@@ -272,12 +270,12 @@ class Cube:
 
                             if self.pos["coin blanc",mil[i]][1][0]==a:
                                 formule=[(2,1,1),(0,1,-1),(2,1,-1),(0,1,1),(2,1,1),(0,1,-1),(2,1,-1)]
-                                 
+
                             else:
                                 formule=[(2,1,1),(0,1,1),(2,1,-1),(0,1,-1),(2,1,1),(0,1,1),(2,1,-1)]
             for coup in formule:
                 self.tourner(coup[0],coup[1],coup[2],mil[i],sym)
-                                
+
             if self.pos["coin blanc",mil[i]][0][0]==1:   #coin haut
                 while (self.pos["coin blanc",mil[i]][0] not in couleur[mil[i]]) or (self.pos["coin blanc",mil[i]][0] not in couleur[mil[i-1]]):  #mettre au dessus
                     self.tourner(0,1,1)
@@ -295,15 +293,15 @@ class Cube:
                                 else:
                                     sym=1
                                 formule=[(0,1,-1),(2,1,1),(0,1,-1),(2,1,-1),(0,1,1),(0,1,1),(2,1,1),(0,1,-1),(2,1,-1)]
-                                
-                                
+
+
 
                         else:   #arete mal orientee
                             if self.pos["coin blanc",mil[i]][1][0]=="blanc":   #coin oriente haut
                                 sym=0
                                 formule=[(2,1,1),(0,1,-1),(2,1,-1),(0,1,1),(1,1,-1),(0,1,1),(1,1,1)]
 
-                                
+
                             else:   #coin oriente cote
                                 if self.pos["coin blanc",mil[i]][1][0]==mil[i]:
                                     sym=0
@@ -311,22 +309,22 @@ class Cube:
                                     sym=1
 
                                 formule=[(0,1,-1),(2,1,1),(0,1,1),(2,1,-1),(0,1,1),(1,1,-1),(0,1,-1),(1,1,1)]
-                                
+
                         for coup in formule:
                             self.tourner(coup[0],coup[1],coup[2],mil[i],sym)
                         continue
-                        
+
                     else:   #arete cote pas bien placee, Mettre en haut
                         if self.pos["arete milieu",mil[i]][0] in couleur[mil[i]] or self.pos["arete milieu",mil[i]][0] in couleur[mil[i-1]]:
                             if self.pos["arete milieu",mil[i]][0] in couleur[mil[i]]:
                                 sym=0
                             else:
                                 sym=1
-                                
+
                             self.tourner(1,1,1,mil[i],sym)
                             self.tourner(0,1,1,mil[i],sym)
                             self.tourner(1,1,-1,mil[i],sym)
-                            
+
                         else:   #arete a l'oppose du coin
                             b=self.pos["arete milieu",mil[i]][0][2]
                             sens=self.pos["arete milieu",mil[i]][0][2]*self.pos["arete milieu",mil[i]][0][1]
@@ -349,16 +347,16 @@ class Cube:
 
                     if a == 0:
                         formule = [(2,1,1),(0,1,1),(0,1,1),(2,1,-1),(0,1,1),(0,1,1),(2,1,1),(0,1,1),(2,1,-1),(0,1,1),(2,1,1),(0,1,1),(2,1,-1)]
-                        
+
                     elif a == 1:
                         formule = [(2,1,1),(0,1,-1),(2,1,-1),(0,1,1),(0,1,1),(2,1,1),(0,1,1),(2,1,-1)]
-                        
+
                     elif a == 2:
                         formule = [(0,1,1),(2,1,1),(0,1,-1),(0,1,-1),(2,1,-1),(0,1,1),(2,1,1),(0,1,-1),(2,1,-1)]
-                        
+
                     else:
                         formule = [(2,1,1),(0,1,1),(0,1,1),(2,1,-1),(0,1,-1),(2,1,1),(0,1,1),(2,1,-1)]
-                        
+
                 else:   #coin oriente cote
                     if self.pos["coin blanc",mil[i]][1][0] == self.pos["arete milieu",mil[i]][1][0]:    #arete assortie
                         if self.pos["arete milieu",mil[i]][1][0] == mil[i]:
@@ -368,7 +366,7 @@ class Cube:
                         for k in range(4):
                             if self.pos["arete milieu",mil[i]][0] in couleur[mil[i-4+k]]:
                                 a=k
-                            
+
                         if sym==1:
                             a=3-a
 
@@ -377,19 +375,19 @@ class Cube:
 
                         elif a==1:
                             formule=[(0,1,-1),(2,1,1),(0,1,1),(0,1,1),(2,1,-1),(0,1,1),(0,1,1),(2,1,1),(0,1,-1),(2,1,-1)]
-                            
+
                         elif a==2:
                             formule=[(0,1,-1),(2,1,1),(0,1,1),(2,1,-1),(0,1,1),(0,1,1),(2,1,1),(0,1,-1),(2,1,-1)]
-                            
+
                         else:
                             formule=[(0,1,1),(2,1,1),(0,1,-1),(2,1,-1)]
-                            
+
                     else:   #arete pas assortie
                         if self.pos["arete milieu",mil[i]][1][0]==mil[i]:
                             sym=0
                         else:
                             sym=1
-                            
+
                         for k in range(4):
                             if self.pos["arete milieu",mil[i]][0] in couleur[mil[i-4+k]]:
                                 a=k
@@ -474,7 +472,7 @@ class Cube:
         formules[(-1,1,1,1,0,1,0,1)] = [(2,1,1),(2,-1,-1),(1,-1,1),(2,1,1),(1,-1,1),(2,1,-1),(1,-1,-1),(2,1,-1),(2,-1,1),(2,1,-1),(1,1,1),(2,1,1),(1,1,-1)]
         formules[(0,1,1,1,-1,1,0,1)] = [(2,1,1),(0,1,1),(0,1,1),(2,1,1),(2,1,1),(1,1,1),(2,1,1),(1,1,-1),(0,1,1),(0,1,1),(2,-1,1),(2,1,-1),(1,1,1),(2,1,1),(1,1,-1),(2,-1,-1)]
         formules[(0,1,1,1,0,1,-1,1)] = [(2,1,1),(0,1,1),(2,1,-1),(0,1,1),(2,1,-1),(1,1,1),(2,1,1),(1,1,-1),(0,1,1),(0,1,1),(2,1,-1),(1,1,1),(2,1,1),(1,1,-1)]
-        
+
         for j in range(4):
             for i in mil:
                 if self.pos["coin jaune",i][0][1:]==ori[2*j]:
@@ -490,7 +488,7 @@ class Cube:
                         ori[2*j+1]=0
                     else:
                         ori[2*j+1]=1
-        
+
         for sym in range(2):
             for i in range(4):
                 if tuple(ori) in formules:
@@ -506,7 +504,7 @@ class Cube:
                 ori[2*i]=-ori[2*i]
 
         print("erreur etape 3")
-  
+
 ############################################       orienter jaune       #############################################
 
     def orienter_jaune(self):
@@ -535,7 +533,7 @@ class Cube:
         #cycle 3 coins 3 aretes
         formules[3,3,0,1,0,2,1,2] = [(2,1,1),(0,1,1),(2,1,-1),(0,1,-1),(2,1,-1),(1,1,1),(2,1,1),(2,1,1),(0,1,-1),(2,1,-1),(0,1,-1),(2,1,1),(0,1,1),(2,1,-1),(1,1,1),(0,1,-1),(1,1,-1),(0,1,-1),(1,1,1),(0,1,1),(1,1,1),(0,1,1),(1,1,1),(0,1,-1),(1,1,1)]
         formules[3,1,0,2,0,2,1,3] = [(2,1,1),(0,1,1),(2,1,-1),(0,1,-1),(2,1,-1),(1,1,1),(2,1,1),(2,1,1),(0,1,-1),(2,1,-1),(0,1,-1),(2,1,1),(0,1,1),(2,1,-1),(1,1,1),(0,1,1),(1,1,1),(0,1,1),(1,1,-1),(0,1,-1),(1,1,-1),(0,1,-1),(1,1,-1),(0,1,1),(1,1,-1)]
-        
+
 
         for j in range(4):
             for i in range(4):
@@ -543,12 +541,12 @@ class Cube:
                     for k in range(4):
                         if self.pos["coin jaune",mil[i]][0] in couleur[mil[i-k]] and self.pos["coin jaune",mil[i]][0] in couleur[mil[i-1-k]]:
                             ori[2*j]=k
-                            
+
                 if self.pos["arete jaune",mil[i]][0][1:]==ori[2*j+1]:
                     for k in range(4):
                         if self.pos["arete jaune",mil[i]][0] in couleur[mil[i-k]]:
                             ori[2*j+1]=k
-        
+
         for k in range(4):
             for sym in range(2):
                 for i in range(4):
@@ -564,7 +562,7 @@ class Cube:
                 for j in range(8):
                     if ori[j]==1 or ori[j]==3:
                         ori[j]=4-ori[j]
-                        
+
             self.tourner(0,1,1)
             ori=ori[6:]+ori[:6]
             ori=[(ori[j]-1)%4 for j in range(8)]
@@ -574,38 +572,41 @@ class Cube:
 ##########################################      Utiliser les moteurs        ##########################################
 
     def moteur(self):
-		
+
         sequenceArduino = ""
         for coup in self.sequence:
             #utiliser moteur adequat pour faire coup
             #faire tous les élement de la sequence
             sequenceArduino += {(0, 1, -1): "a", (0, 1, -2): "b", (0, 1, 1): "c", (1, 1, -1): "d", (1, 1, -2): "e", (1, 1, 1): "f", (1, -1, -1): "g", (1, -1, -2): "h", (1, -1, 1): "i", (2, 1, -1): "j", (2, 1, -2): "k", (2, 1, 1): "l", (2, -1, -1): "m", (2, -1, -2): "n", (2, -1, 1): "o"}[coup]
-                        
+
         # le z sert de confirmation à la fin de chaque sequence pour etre sur que l'arduino a tout execute
-        sequenceArduino += "z"
-        
-        '''
+        # sequenceArduino += "z"
+
         # envoyer à l'arduino la chaine de caractere
+        '''
         ser = serial.Serial('/dev/ttyACM0', timeout=.1)
         hook = ""
         while hook != "GO":
                 time.sleep(0.001)
                 hook = ser.readline().decode()
         print("yeah")
-        
         for elt in sequenceArduino:
-                ser.write(str.encode(elt))
-                t = ""
-                while t != "OK":
-                        time.sleep(0.001)
-                        t = ser.readline().decode()
-                        if t == "NOPE":
-                                print("error")
-                                break
-                print(t)
+            ser.write(str.encode(elt))
+            t = ""
+            while t != "OK":
+                    time.sleep(0.001)
+                    t = ser.readline().decode()
+                    if t == "NOPE":
+                            print("error")
+                            break
+            print(t)
         ser.close()
         '''
-        
+
+        #ser = serial.Serial('/dev/cu.usbmodem1421', timeout=.1)
+        for elt in sequenceArduino:
+            ser.write(str.encode(elt))
+
         self.sequence = []
         pass
 
@@ -628,7 +629,7 @@ class Cube:
                 i += 1
 
 #########################################################################################################
-    
+
     def resolution(self):
         self.croix_blanche()
         self.deux_etages()
@@ -641,20 +642,8 @@ class Cube:
 
 
 def photographier():
-    #prendre une photo avec la gopro puis l'analyser
-    '''
-    #take a photo
-    photo = camera.Camera()
-    photo.take_photo()
-    
-    #analyse the pic and return 
-    photoAnalysed = ColorFinder(photo.path)
-    photoAnalysed.modify()
-    
-    #return liste de couleurs (sans celle du milieu)
-    return photoAnalysed.analyse()
-    '''
-    return 8 * ["blanc"] #provisoire #return liste de couleur
+
+    return analyse_pic()
 
 
 def melange(n = 1):
@@ -664,7 +653,7 @@ def melange(n = 1):
         c = rd.choice([-1,1])
         cube.tourner(a,b,c)
         #print(a,b,c)
-        
+
 def test(nombre_test = 1, nombre_melange = 0):
     debut=time.time()
     bien=0
@@ -680,7 +669,7 @@ def test(nombre_test = 1, nombre_melange = 0):
         cube.deux_etages()
         cube.face_jaune()
         cube.orienter_jaune()
-        
+
         coup+=len(cube.sequence)
         cube.optimisation()
         coup_opti+=len(cube.sequence)
@@ -708,17 +697,9 @@ if __name__ == "__main__":
 	cube = Cube()
 	test(100,20)
 
-	'''
-	scan the cube on the gui:
-	cube = Cube("6/5")
-	test()
-
-	'''
-
 	# melange(10)
 	# print(cube.sequence)
 	# test()
 	# print(cube.sequence)
-
-cube = Cube("Jacques et felix sont geniaux et ils meritent 20/20")
-cube.resolution()
+	cube = Cube(str())
+	cube.resolution()
