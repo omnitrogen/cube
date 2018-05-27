@@ -1,12 +1,16 @@
 import math
+import time
 import os
 import cv2
 import numpy as np
 import imutils
+
+import settings
+from nearest_color import ColorNames
+
 from goprocam import GoProCamera
 from goprocam import constants
 
-from nearest_color import ColorNames
 
 class Camera(GoProCamera.GoPro):
     """ GoPro class """
@@ -18,9 +22,11 @@ class Camera(GoProCamera.GoPro):
 
     def take_photo(self):
         """ take pic, download it and return the path of the pic """
+        time.sleep(1)
         GoProCamera.GoPro.take_photo(self)
         GoProCamera.GoPro.downloadLastMedia(self)
         self.path = os.getcwd() + "/" + "118GOPRO-" + str(self.getMediaInfo("file"))
+
 
 
 def analyse_pic():
@@ -59,6 +65,7 @@ def analyse_pic():
                 b += 1
         return [math.floor(sumB/b), math.floor(sumG/b), math.floor(sumR/b)][::-1]
 
+    pic = Camera()
     pic.take_photo()
     image = imutils.rotate_bound(cv2.resize(cv2.imread(pic.path), None, fx=0.2, fy=0.2, interpolation=cv2.INTER_AREA), 49)[229:358, 300:427]
     #image = cv2.GaussianBlur(imageArg, (3, 3), 0)

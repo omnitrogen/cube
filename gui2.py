@@ -8,6 +8,8 @@ import serial
 from goprocam import GoProCamera
 from goprocam import constants
 
+import settings
+
 from quatre_etapes import *
 
 
@@ -41,9 +43,10 @@ class RubiksSolverGui:
 
 
 if __name__ == "__main__":
-    ser = serial.Serial('/dev/cu.usbmodem1421', timeout=.1)
-    pic = Camera()
+    #ser = serial.Serial('/dev/cu.usbmodem1421', timeout=.1)
+    #pic = Camera()
+    settings.init()
     root = tk.Tk()
     my_gui = RubiksSolverGui(root)
     root.mainloop()
-    ser.close()
+    settings.ser.close()

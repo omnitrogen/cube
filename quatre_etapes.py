@@ -2,7 +2,9 @@ import random as rd
 import time
 from pprint import pprint
 
-from camera_analyse import Camera, analyse_pic
+import settings
+import camera_analyse
+
 
 class Face:
     def __init__(self, axe, valeur):
@@ -88,7 +90,7 @@ class Cube:
     def construction(self):
         """Dans cette methode on prend des photos et on recnstitue le cube"""
 
-        facepos = [[-1,a,b] for a in [1,0,-1] for b in [1,0,-1] if a!=0 or b!=0]
+        facepos = [[-1,a,b] for a in [-1,0,1] for b in [-1,0,1] if a!=0 or b!=0]
         for i in range(12):
             self.tourner(1 + (i+1) %7 %2, 1, 1)
             self.tourner(1 + (i+1) %7 %2, -1, -1)
@@ -118,9 +120,11 @@ class Cube:
 
             for j in range(4):
                 if mil[j] in self.pos[i][1] and (mil[j-1] in self.pos[i][1] or a in ["arete blanc", "arete jaune"]):
-                    self.pos[a,mil[j]] = [self.pos[i]]
+                    self.pos[a,mil[j]] = self.pos[i]
                     break
             del self.pos[i]
+
+        pprint(self.pos)
 
 #######################################         croix blanche       #################################
 
@@ -604,9 +608,10 @@ class Cube:
         '''
 
         #ser = serial.Serial('/dev/cu.usbmodem1421', timeout=.1)
+        print("debut moteur")
         for elt in sequenceArduino:
-            ser.write(str.encode(elt))
-
+            settings.ser.write(str.encode(elt))
+        print("fin moteur")
         self.sequence = []
         pass
 
@@ -631,19 +636,27 @@ class Cube:
 #########################################################################################################
 
     def resolution(self):
+        print("debut resolution")
+        print("croix_blanche")
         self.croix_blanche()
+        print("deux_etages")
         self.deux_etages()
+        print("face_jaune")
         self.face_jaune()
+        print("orienter_jaune")
         self.orienter_jaune()
-
+        print("optimisation")
         self.optimisation()
-
+        print("moteur")
         self.moteur()
-
+        print("fin resolution")
 
 def photographier():
-
-    return analyse_pic()
+    print("debut photo")
+    result = camera_analyse.analyse_pic()
+    print(result)
+    print("fin photo")
+    return result
 
 
 def melange(n = 1):
