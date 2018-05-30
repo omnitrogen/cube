@@ -54,7 +54,7 @@ class Cube:
 
         else:
             n=0
-            for i in [[a,b,c] for a in [-1,0,1] for b in [-1,0,1] for c in [-1,0,1]]:
+            for i in [[a,b,c] for a in [-1,0,1] for b in [1,0,-1] for c in [-1,0,1]]:
                 self.pos[n]=[i,3*[None]]
                 n+=1
             self.construction()
@@ -90,7 +90,7 @@ class Cube:
     def construction(self):
         """Dans cette methode on prend des photos et on recnstitue le cube"""
 
-        facepos = [[-1,a,b] for a in [-1,0,1] for b in [-1,0,1] if a!=0 or b!=0]
+        facepos = [[-1,a,b] for a in [-1,0,1] for b in [1,0,-1] if a!=0 or b!=0]
         for i in range(12):
             self.tourner(1 + (i+1) %7 %2, 1, 1)
             self.tourner(1 + (i+1) %7 %2, -1, -1)
@@ -234,7 +234,7 @@ class Cube:
                             else:
                                 a=mil[i]
                                 sym=0
- 
+
                             while self.pos["arete milieu",mil[i]][0] not in couleur[a]:
                                 self.tourner(0,1,1)
 

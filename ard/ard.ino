@@ -94,13 +94,14 @@ void loop() {
 void turn(int sens, int pinPas, int pinSens, float rot, int enable) {
 
     digitalWrite(enable, LOW);
+    delay(100);
     digitalWrite(pinSens, sens);
     delay(100);
     for(int k = 0; k <= spr * rot; k++){
         digitalWrite(pinPas, HIGH);
-        delayMicroseconds(10);
+        // delayMicroseconds(10);
         digitalWrite(pinPas, LOW);
-        delayMicroseconds(50);
+        delayMicroseconds(10);
     }
     delay(200);
     digitalWrite(enable, HIGH);

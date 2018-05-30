@@ -22,7 +22,7 @@ class Camera(GoProCamera.GoPro):
 
     def take_photo(self):
         """ take pic, download it and return the path of the pic """
-        time.sleep(1)
+        time.sleep(0.5)
         GoProCamera.GoPro.take_photo(self)
         GoProCamera.GoPro.downloadLastMedia(self)
         self.path = os.getcwd() + "/" + "118GOPRO-" + str(self.getMediaInfo("file"))
@@ -67,9 +67,12 @@ def analyse_pic():
 
     pic = Camera()
     pic.take_photo()
-    image = imutils.rotate_bound(cv2.resize(cv2.imread(pic.path), None, fx=0.2, fy=0.2, interpolation=cv2.INTER_AREA), 49)[229:358, 300:427]
+    image = imutils.rotate_bound(cv2.resize(cv2.imread(pic.path), None, fx=0.2, fy=0.2, interpolation=cv2.INTER_AREA), 49)[234:362, 306:434]
     #image = cv2.GaussianBlur(imageArg, (3, 3), 0)
     image = increase_brightness(image, value=math.floor(100*math.exp((-approximate_lum(image)**2)/(2*60**2))))
+
+    #cv2.imshow("test", image)
+    #cv2.waitKey(0)
 
     result = [[0,0], [0,1], [0,2], [1,0], [1,1], [1,2], [2,0], [2,1], [2,2]]
     colors = {"MidnightBlue": "bleu", "ForestGreen": "vert", "OrangeRed": "orange", "Orange": "jaune", "DarkRed": "rouge", "DarkGray": "blanc"}
