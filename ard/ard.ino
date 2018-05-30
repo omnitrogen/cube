@@ -99,7 +99,6 @@ void turn(int sens, int pinPas, int pinSens, float rot, int enable) {
     delay(100);
     for(int k = 0; k <= spr * rot; k++){
         digitalWrite(pinPas, HIGH);
-        // delayMicroseconds(10);
         digitalWrite(pinPas, LOW);
         delayMicroseconds(10);
     }
