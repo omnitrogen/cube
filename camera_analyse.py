@@ -5,6 +5,11 @@ import cv2
 import numpy as np
 import imutils
 
+from tkinter import *
+import tkinter as tk
+from tkinter import ttk
+from PIL import Image, ImageTk
+
 import settings
 from nearest_color import ColorNames
 
@@ -26,7 +31,6 @@ class Camera(GoProCamera.GoPro):
         GoProCamera.GoPro.take_photo(self)
         GoProCamera.GoPro.downloadLastMedia(self)
         self.path = os.getcwd() + "/" + "118GOPRO-" + str(self.getMediaInfo("file"))
-
 
 
 def analyse_pic():
@@ -68,33 +72,31 @@ def analyse_pic():
     pic = Camera()
     pic.take_photo()
     image = imutils.rotate_bound(cv2.resize(cv2.imread(pic.path), None, fx=0.2, fy=0.2, interpolation=cv2.INTER_AREA), 49)[234:362, 306:434]
-    #image = cv2.GaussianBlur(imageArg, (3, 3), 0)
-    image = increase_brightness(image, value=math.floor(100*math.exp((-approximate_lum(image)**2)/(2*60**2))))
-
-    #cv2.imshow("test", image)
-    #cv2.waitKey(0)
+    image = cv2.GaussianBlur(image, (3, 3), 0)
+    #image = increase_brightness(image, value=math.floor(100*math.exp((-approximate_lum(image)**2)/(2*60**2))))
 
     result = [[0,0], [0,1], [0,2], [1,0], [1,1], [1,2], [2,0], [2,1], [2,2]]
     colors = {"MidnightBlue": "bleu", "ForestGreen": "vert", "OrangeRed": "orange", "Orange": "jaune", "DarkRed": "rouge", "DarkGray": "blanc"}
     for i in result:
         i.append(colors[ColorNames.findNearestWebColorName(get_dominant_color(image, tuple(i)))])
 
-    return [i[2] for i in result if i[:2] != [1,1]] # ne renvoit pas le cube central
-
-
-'''
-pic = Camera()
-pic.take_photo()
-image = imutils.rotate_bound(cv2.resize(cv2.imread(pic.path), None, fx=0.2, fy=0.2, interpolation=cv2.INTER_AREA), 49)[229:358, 300:427]
-cv2.imshow("im", image)
-cv2.waitKey(0)
-
-image = cv2.imread(test.path)
-resized = cv2.resize(image, None, fx=0.2, fy=0.2, interpolation=cv2.INTER_AREA)
-rotated = imutils.rotate_bound(resized, 49)
-rotated2 = rotated[229:358, 300:427]
-print(analyse(rotated2))
-'''
-
-#pic = Camera()
-#print(analyse_pic())
+    returned = [i[2] for i in result if i[:2] != [1,1]]
+    #print(returned)
+    #cv2.imshow("test", image)
+    #cv2.waitKey(0)
+    photo = ImageTk.PhotoImage(Image.fromarray(cv2.resize(image[...,::-1], None, fx=0.4, fy=0.4, interpolation=cv2.INTER_AREA)))
+    settings.photos.append(photo)
+    t = settings.pos[settings.photos.__len__()]
+    label = tk.Label(settings.my_gui.frame2, image=settings.photos[-1])
+    settings.images.append(label)
+    label.grid(row=t[0], column=t[1], pady=(5, 5))
+    v = tk.StringVar()
+    v.set(str(returned))
+    settings.vs.append(v)
+    text = tk.Entry(settings.my_gui.frame2, textvariable=settings.vs[-1], width=55, justify=CENTER)
+    settings.texts.append(text)
+    text.grid(row=t[2], column=t[3], pady=(5, 5))
+    settings.my_gui.frame2.update()
+    
+    settings.incr += 1
+    return returned # ne renvoit pas le cube central

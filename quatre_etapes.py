@@ -103,6 +103,7 @@ class Cube:
                         if self.pos[k][0] == facepos[j]:
                             self.pos[k][1][0] = photo[j]
                             break
+     	settings.my_gui.solve_button.grid(pady=(5, 5))
         pprint(self.pos) #a supprimer
 
         for i in range(27):
@@ -654,7 +655,7 @@ class Cube:
 def photographier():
     print("debut photo")
     result = camera_analyse.analyse_pic()
-    print(result)
+    # print(result)
     print("fin photo")
     return result
 
