@@ -2,6 +2,9 @@ import random as rd
 import time
 from pprint import pprint
 
+import tkinter as tk
+import ast
+
 import settings
 import camera_analyse
 
@@ -53,10 +56,6 @@ class Cube:
             self.pos["arete blanc","rouge"] = [[-1, 0, 1],["blanc",None,"rouge"]]
 
         else:
-            n=0
-            for i in [[a,b,c] for a in [-1,0,1] for b in [1,0,-1] for c in [-1,0,1]]:
-                self.pos[n]=[i,3*[None]]
-                n+=1
             self.construction()
 
 ###################        fonctions agissant sur la sequence      ##############################
@@ -90,7 +89,13 @@ class Cube:
     def construction(self):
         """Dans cette methode on prend des photos et on recnstitue le cube"""
 
+        etat = True
+
         facepos = [[-1,a,b] for a in [-1,0,1] for b in [1,0,-1] if a!=0 or b!=0]
+        n=0
+        for i in [[a,b,c] for a in [-1,0,1] for b in [1,0,-1] for c in [-1,0,1]]:
+            self.pos[n]=[i,3*[None]]
+            n+=1
         for i in range(12):
             self.tourner(1 + (i+1) %7 %2, 1, 1)
             self.tourner(1 + (i+1) %7 %2, -1, -1)
@@ -103,8 +108,6 @@ class Cube:
                         if self.pos[k][0] == facepos[j]:
                             self.pos[k][1][0] = photo[j]
                             break
-     	settings.my_gui.solve_button.grid(pady=(5, 5))
-        pprint(self.pos) #a supprimer
 
         for i in range(27):
             if None in self.pos[i][1]:
@@ -126,6 +129,64 @@ class Cube:
             del self.pos[i]
 
         pprint(self.pos)
+
+        if self.pos.keys() != Cube().pos.keys():
+            settings.my_gui.etat = tk.Label(settings.my_gui.frame3, text="error detection")
+            settings.my_gui.etat.pack()
+            
+        else:
+            settings.my_gui.etat = tk.Label(settings.my_gui.frame3, text="detection ok")
+            settings.my_gui.etat.pack()
+        
+        
+        global var
+        var = tk.IntVar()
+        settings.my_gui.solve_button = tk.Button(settings.my_gui.frame3, text="Solve", command=lambda: var.set(1))
+        settings.my_gui.solve_button.pack()
+        settings.my_gui.solve_button.wait_variable(var)
+
+        self.pos = {}
+        n=0
+        for i in [[a,b,c] for a in [-1,0,1] for b in [1,0,-1] for c in [-1,0,1]]:
+            self.pos[n]=[i,3*[None]]
+            n+=1
+        nouvListe = [ast.literal_eval(i.get()) for i in settings.vs]
+        print("nouvListe \n", nouvListe)
+        increment = 0
+        for i in range(12):
+            self.tourner(1 + (i+1) %7 %2, 1, 1)
+            self.tourner(1 + (i+1) %7 %2, -1, -1)
+
+            if i%3 != 0:
+                photo = nouvListe[increment]
+                increment += 1
+                for j in range(8):
+                    for k in self.pos:
+                        if self.pos[k][0] == facepos[j]:
+                            self.pos[k][1][0] = photo[j]
+                            break
+        self.sequence = []
+
+        for i in range(27):
+            if None in self.pos[i][1]:
+                a = "arete "
+            else:
+                a = "coin "
+
+            if "blanc" in self.pos[i][1]:
+                a += "blanc"
+            elif "jaune" in self.pos[i][1]:
+                a += "jaune"
+            else:
+                a += "milieu"
+
+            for j in range(4):
+                if mil[j] in self.pos[i][1] and (mil[j-1] in self.pos[i][1] or a in ["arete blanc", "arete jaune"]):
+                    self.pos[a,mil[j]] = self.pos[i]
+                    break
+            del self.pos[i]
+
+        print(settings.vs)
 
 #######################################         croix blanche       #################################
 
@@ -651,6 +712,9 @@ class Cube:
         print("moteur")
         self.moteur()
         print("fin resolution")
+        settings.my_gui.finished = tk.Label(settings.my_gui.frame3, text="done!")
+        settings.my_gui.finished.pack()
+        settings.my_gui.frame3.update()
 
 def photographier():
     print("debut photo")

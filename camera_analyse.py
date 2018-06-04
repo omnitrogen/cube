@@ -10,6 +10,8 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 
+import ast
+
 import settings
 from nearest_color import ColorNames
 

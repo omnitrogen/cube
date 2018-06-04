@@ -32,19 +32,21 @@ class RubiksSolverGui:
         self.frame.pack(padx=5, pady=5)
 
         self.frame2 = tk.Frame(master)
-        self.solve_button = tk.Button(self.frame2, text="Solve", command=self.solve)
-        self.solve_button.grid_forget()
         self.frame2.pack()
+
+        self.frame3 = tk.Frame(master)
+        self.frame3.pack()
 
     def solve(self):
         cube = Cube(str())
         cube.resolution()
         print("solving")
         pass
+        
 
 def init():
     global ser
-    ser = serial.Serial('/dev/ttyACM0', timeout=.1)
+    ser = serial.Serial('/dev/ttyACM2', timeout=.1)
     global root
     root = tk.Tk()
     global my_gui
